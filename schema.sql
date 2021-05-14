@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS `server_config` (
 	CONSTRAINT `server_config_pk` PRIMARY KEY (`config`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `server_config` (`config`, `value`) VALUES ('db_version', '16'), ('motd_hash', ''), ('motd_num', '0'), ('players_record', '0');
+INSERT INTO `server_config` (`config`, `value`) VALUES ('db_version', '17'), ('motd_hash', ''), ('motd_num', '0'), ('players_record', '0');
 
 -- --------------------------------------------------------
 
@@ -161,7 +161,8 @@ CREATE TABLE IF NOT EXISTS `players` (
   `lookmounthead` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `lookmountlegs` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `lookfamiliarstype` int(11) unsigned NOT NULL DEFAULT '0',
-  `isreward` tinyint(1) NOT NULL DEFAULT "1",
+  `isreward` tinyint(1) NOT NULL DEFAULT '1',
+  `istutorial` tinyint(1) NOT NULL DEFAULT '0',
   INDEX `account_id` (`account_id`),
   INDEX `vocation` (`vocation`),
   CONSTRAINT `players_pk` PRIMARY KEY (`id`),
@@ -303,12 +304,14 @@ CREATE TABLE IF NOT EXISTS `global_storage` (
 
 CREATE TABLE IF NOT EXISTS `guilds` (
 	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`level` int(11) NOT NULL DEFAULT '1',
 	`name` varchar(255) NOT NULL,
 	`ownerid` int(11) NOT NULL,
 	`creationdata` int(11) NOT NULL,
 	`motd` varchar(255) NOT NULL DEFAULT '',
 	`residence` int(11) NOT NULL DEFAULT '0',
 	`balance` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
+	`points` int(11) NOT NULL DEFAULT '0',
 	CONSTRAINT `guilds_pk` PRIMARY KEY (`id`),
 	CONSTRAINT `guilds_name_unique` UNIQUE (`name`),
 	CONSTRAINT `guilds_owner_unique` UNIQUE (`ownerid`),
